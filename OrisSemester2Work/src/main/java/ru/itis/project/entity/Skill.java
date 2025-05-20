@@ -1,6 +1,6 @@
 package ru.itis.project.entity;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 public class Skill {

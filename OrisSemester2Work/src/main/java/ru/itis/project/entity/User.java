@@ -1,11 +1,10 @@
 package ru.itis.project.entity;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
+@Table(name = "users")
 public class User {
 
     @Id
@@ -18,7 +17,7 @@ public class User {
 
     private Integer skillPoints;
 
-    private Float avgRating;
+    private Double avgRating;
 
     private String description;
 }

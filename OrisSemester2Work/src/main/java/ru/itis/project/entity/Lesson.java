@@ -2,7 +2,7 @@ package ru.itis.project.entity;
 
 import ru.itis.project.dictionary.LessonStatus;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 public class Lesson {

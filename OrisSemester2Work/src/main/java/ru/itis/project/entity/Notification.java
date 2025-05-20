@@ -3,7 +3,7 @@ package ru.itis.project.entity;
 import ru.itis.project.dictionary.NotificationStatus;
 import ru.itis.project.dictionary.NotificationType;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 public class Notification {
