@@ -1,8 +1,12 @@
 package ru.itis.project.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.experimental.Accessors;
 
 @Entity
+@Data
+@Accessors(chain = true)
 public class Skill {
 
     @Id
@@ -17,7 +21,11 @@ public class Skill {
     @ManyToOne(fetch = FetchType.LAZY)
     private Category category;
 
-    private Float rating;
+    private Double rating;
+
+    private Integer ratingCount;
 
     private String description;
+
+    private String imageUrl;
 }

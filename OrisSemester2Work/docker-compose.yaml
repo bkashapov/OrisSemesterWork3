@@ -1,0 +1,15 @@
+version: '3.3'
+
+services:
+  postgres:
+    image: postgres:14
+    environment:
+      POSTGRES_USER: user       # postgres user
+      POSTGRES_PASSWORD: pass   # postgres password
+    ports:
+      - "5435:5432"             # postgres port
+    networks:
+      - oris-network
+
+networks:
+  oris-network:

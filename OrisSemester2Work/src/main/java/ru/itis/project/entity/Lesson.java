@@ -1,10 +1,15 @@
 package ru.itis.project.entity;
 
+import jakarta.persistence.*;
+import lombok.Data;
+import lombok.experimental.Accessors;
 import ru.itis.project.dictionary.LessonStatus;
 
-import jakarta.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
+@Data
+@Accessors(chain = true)
 public class Lesson {
 
     @Id
@@ -19,6 +24,10 @@ public class Lesson {
 
     @ManyToOne
     private Skill teacherSkill;
+
+    private LocalDateTime startDateTime;
+
+    private LocalDateTime endDateTime;
 
     @Enumerated
     private LessonStatus status;

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Сайт с сайдбаром</title>
+</head>
+<body>
+
+<!-- Сайдбар -->
+<div>
+    <span>☰</span>
+    <ul>
+        <li><a th:href="@{/home}">Главная</a></li>
+        <li><a th:href="@{/profile}">Профиль</a></li>
+        <li><a th:href="@{/settings}">Настройки</a></li>
+    </ul>
+</div>
+
+<!-- Основной контент -->
+<div class="content">
+    <h1>Добро пожаловать!</h1>
+</div>
+
+</body>
+</html>
