@@ -1,5 +1,6 @@
 package ru.itis.project.security.config;
 
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -21,17 +22,23 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http)
             throws Exception {
 
-        return http.securityMatcher("/api/**")
+        return http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/api/v1/me/**").authenticated()
+                        .requestMatchers("/me/**").authenticated()
                         .anyRequest().permitAll())
                 .formLogin(form -> form
-                        .loginPage("/api/v1/login")
-                        .loginProcessingUrl("/api/v1/login")
+                        .loginProcessingUrl("/login")
                         .usernameParameter("username")
                         .passwordParameter("password")
-                        .defaultSuccessUrl("/api/v1/me"))
-                .logout(AbstractHttpConfigurer::disable)
+                        .successHandler((request, response, authentication) -> {
+                            response.setStatus(HttpServletResponse.SC_OK);
+                        })
+                        .failureHandler((request, response, exception) -> {
+                            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                            response.getWriter().write("Неверный логин или пароль");
+                        }))
+                .csrf(AbstractHttpConfigurer::disable) //TODO исправить
+                .logout(AbstractHttpConfigurer::disable) //TODO сделать нормальный логаут
                 .build();
     }
     @Bean

@@ -5,5 +5,6 @@ public record UserDto (
     Double avgRating,
     Integer skillPoints,
     String email,
-    String description
+    String description,
+    String avatarFilename
 ) {}

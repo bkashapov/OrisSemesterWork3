@@ -11,7 +11,7 @@ import ru.itis.project.service.SkillService;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/user/{username}/skill")
+@RequestMapping("/user/{username}/skill")
 public class SkillController {
 
     private final SkillService skillService;
@@ -27,7 +27,7 @@ public class SkillController {
 
     @GetMapping("/{skillId}")
     public String getSkill(@PathVariable String username,
-                             @PathVariable int skillId,
+                             @PathVariable Long skillId,
                              Model model) {
         model.addAttribute("skill", skillService.getSkill(username, skillId));
         return "skill";

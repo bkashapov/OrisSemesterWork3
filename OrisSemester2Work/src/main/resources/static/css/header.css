@@ -1,0 +1,57 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Inter, "Segoe UI", sans-serif;
+    height: 100%;
+}
+
+.navbar-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 100px;
+    border-bottom: 1px solid #ccc;
+    box-shadow: 0 4px 6px -2px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 900;
+    background-color: white;
+}
+
+.navbar-left {
+    display: flex;
+    align-items: center;
+}
+
+.site-title {
+    margin-left: 10px;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+}
+
+.auth-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.auth-btn {
+    padding: 6px 12px;
+    cursor: pointer;
+}
+
+.logo {
+    height: 30px;
+}

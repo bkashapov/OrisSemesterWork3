@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import ru.itis.project.dto.SkillBasicDto;
 import ru.itis.project.dto.UserPageDto;
 import ru.itis.project.entity.Skill;
 import ru.itis.project.entity.User;
@@ -34,10 +35,10 @@ public class HomepageService {
                 orElseThrow(() -> new UserNotFoundException("user not found: " + userDetails.getUsername()));
 
         Pageable pageable = PageRequest.of(0, 5, Sort.by(Sort.Direction.ASC, "rating"));
-        List<Skill> skills = skillRepository.findAllByUsername(user.getUsername(), pageable);
+        List<SkillBasicDto> skills = skillRepository.findAllByUsername(user.getUsername(), pageable).stream().map(skillDtoMapper::toSkillBasicDto).toList();
         return new UserPageDto(
                 userDtoMapper.userToUserDto(user),
-                skillDtoMapper.toSkillDtoList(skills)
+                skills
         );
     }
 }

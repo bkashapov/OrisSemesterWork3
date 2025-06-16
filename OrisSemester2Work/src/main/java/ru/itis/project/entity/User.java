@@ -26,4 +26,8 @@ public class User {
     private Double avgRating;
 
     private String description;
+
+    private boolean isInDoNotBotherMode = false;
+
+    private String avatarFilename = "/images/default_avatar.png";
 }

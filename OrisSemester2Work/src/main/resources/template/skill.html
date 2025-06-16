@@ -2,23 +2,77 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Сайт с сайдбаром</title>
+    <title th:text="${skill.name}">Skill page</title>
+    <link rel="stylesheet" th:href="@{/css/skill.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/button.css}">
+    <link rel="stylesheet" th:href="@{/css/login.css}">
+    <script defer th:src="@{/js/header.js}"></script>
+    <script defer th:src="@{/js/login.js}"></script>
 </head>
 <body>
 
-<!-- Сайдбар -->
-<div>
-    <span>☰</span>
-    <ul>
-        <li><a th:href="@{/home}">Главная</a></li>
-        <li><a th:href="@{/profile}">Профиль</a></li>
-        <li><a th:href="@{/settings}">Настройки</a></li>
-    </ul>
-</div>
+<div th:replace="fragments/header"></div>
 
-<!-- Основной контент -->
-<div class="content">
-    <h1>Добро пожаловать!</h1>
+<div th:replace="fragments/login-form"></div>
+
+<div class="container">
+    <div class="top-image">
+        <img th:src="${skill.imageFilename}" alt="Banner">
+    </div>
+
+    <div class="bottom-wrapper">
+        <div class="main-content">
+            <div class="breadcrumbs">
+                <a th:href="@{/user}">users</a>
+                <span>/</span>
+                <a th:href="@{/user/{username}(username=${skill.username})}"
+                   th:text="${skill.username}">Username</a>
+                <span>/</span>
+                <a th:href="@{/user/{username}/skill(username=${skill.username})}">skills</a>
+                <span>/</span>
+                <a th:href="@{/user/{username}/skill/{id}(username=${skill.username}, id=${skill.id})}"
+                   th:text="${skill.name}">Username</a>
+            </div>
+            <div class="skill-header">
+                <h2 th:text="${skill.name}">Skill name</h2>
+                <button class="custom-button custom-button-1" th:disabled="${user == null || skill.isArchived}">Enroll</button>
+            </div>
+            <p style="font-size: 12px; color: red;" th:if="${skill.isArchived}">(Archived)</p>
+
+
+            <nav class="skill-navbar">
+                <ul>
+                    <li><a href="#" style="color: black">Main</a></li>
+                    <li><a href="#" th:text="'Comments(' + ${skill.commentCount} + ')'">Comments</a></li>
+                    <li><a href="#"th:text="'Reviews(' + ${skill.ratingCount} + ')'">Reviews</a></li>
+                </ul>
+            </nav>
+
+            <div class="skill-content-row">
+                <div class="skill-description">
+                    <h3>Description</h3>
+                    <p th:text="${skill.description}">Skill description</p>
+                </div>
+                <div class="skill-stats">
+                    <div class="stat-item">
+                        <h4>Rating</h4>
+                        <p th:text="${#numbers.formatDecimal(skill.rating, 1, 2)}">rating</p>
+                    </div>
+                    <div class="stat-item">
+                        <h4>Lessons taught</h4>
+                        <p th:text="${skill.lessonCount}">lessons</p>
+                    </div>
+                    <div class="stat-item">
+                        <h4>Lectures held</h4>
+                        <p th:text="${skill.lectureCount}">lectures</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
 </div>
 
 </body>

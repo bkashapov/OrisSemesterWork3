@@ -7,5 +7,10 @@ public record SkillDto (
     Double rating,
     Integer ratingCount,
     String category,
-    String description
+    String description,
+    String imageFilename,
+    boolean isArchived,
+    Integer lessonCount,
+    Integer lectureCount,
+    Integer commentCount
 ) {}

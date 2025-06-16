@@ -25,7 +25,10 @@ public class Skill {
 
     private Integer ratingCount;
 
+    @Column(length = 600)
     private String description;
 
-    private String imageUrl;
+    private String imageFilename = "/images/default_skill.jpg";
+
+    private Boolean isArchived = false;
 }

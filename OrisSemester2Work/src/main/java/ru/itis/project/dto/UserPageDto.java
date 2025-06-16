@@ -4,5 +4,5 @@ import java.util.List;
 
 public record UserPageDto (
     UserDto user,
-    List<SkillDto> skills
+    List<SkillBasicDto> skills
 ) {}

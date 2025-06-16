@@ -13,7 +13,6 @@ import ru.itis.project.dto.RegistrationFormDto;
 import ru.itis.project.security.service.AuthService;
 
 @Controller
-@RequestMapping("/api/v1")
 @RequiredArgsConstructor
 public class AuthController {
 
@@ -29,7 +28,7 @@ public class AuthController {
     public String postRegister(@ModelAttribute @Valid RegistrationFormDto registrationFormDto,
                            Model model) {
         authService.registerUser(registrationFormDto);
-        return "redirect:/api/v1/login";
+        return "redirect:/login";
     }
 
     @GetMapping("/login")

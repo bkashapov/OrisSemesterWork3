@@ -1,0 +1,140 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow-y: auto;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 150vh;
+}
+
+.top-image {
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+}
+
+.top-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* чтобы картинка не искажалась */
+}
+
+.bottom-wrapper {
+    flex: 1;
+    display: flex;
+    justify-content: center; /* по горизонтали */
+
+    padding: 30px;
+}
+
+.main-content {
+    width: 100%;
+    background: white;
+    max-width: 1000px;
+}
+
+.skill-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.skill-header h2 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.skill-navbar {
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 16px;
+}
+
+.skill-navbar ul {
+    display: flex;
+    gap: 24px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+}
+.cur {
+    text-decoration: black;
+}
+.skill-navbar li {
+    padding-inline: 10px;
+}
+
+.skill-navbar li a {
+    display: block;
+    padding: 12px 0;
+    text-decoration: none;
+    font-weight: 500;
+    color: #666;
+    transition: color 0.3s;
+}
+
+.skill-navbar li a:hover {
+    color: #007bff;
+}
+
+.breadcrumbs {
+    display: flex;
+    font-size: 14px;
+    margin-bottom: 10px;
+    color: #666;
+}
+
+.breadcrumbs a {
+    text-decoration: none;
+    color: #aaa;
+    transition: color 0.2s;
+}
+
+.breadcrumbs a:hover {
+    color: #007bff;
+}
+
+.breadcrumbs span {
+    margin: 0 5px;
+    color: #aaa;
+}
+
+.skill-content-row {
+    display: flex;
+    gap: 32px;
+    margin-top: 24px;
+}
+
+.skill-description {
+    flex: 7; /* 70% */
+}
+
+.skill-stats {
+    font-size: 16px;
+    color: #555;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.stat-item {
+    justify-content: space-between;
+    padding-bottom: 4px;
+}
+
+.stat-item h4 {
+    margin: 0;
+    font-weight: 600;
+    color: #333;
+}
+
+.stat-item p {
+    margin: 0;
+    font-weight: 500;
+}
+

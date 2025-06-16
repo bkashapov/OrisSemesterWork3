@@ -1,0 +1,47 @@
+/* Общие стили */
+.custom-button {
+    min-height: 32px;
+    min-width: 70px;
+    outline: none;
+    font-size: 15px;
+    font-weight: bold;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Белая кнопка */
+.custom-button-1 {
+    background-color: white;
+    color: black;
+}
+
+.custom-button-1:hover {
+    background-color: #F1F3F4;
+}
+
+/* Чёрная кнопка */
+.custom-button-2 {
+    background-color: black;
+    color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.custom-button-2:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.custom-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+    color: #666;
+}
+
+.button-a {
+    text-decoration: none;
+}
+
+.button-a:hover {
+    text-decoration: none;
+}

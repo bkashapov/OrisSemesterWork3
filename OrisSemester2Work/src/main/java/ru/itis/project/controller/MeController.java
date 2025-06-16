@@ -17,7 +17,7 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/me")
+@RequestMapping("/me")
 public class MeController {
 
     private final HomepageService homepageService;
@@ -33,15 +33,22 @@ public class MeController {
     }
 
     @GetMapping("/skill")
-    public List<SkillDto> getMySkills(@AuthenticationPrincipal UserDetails userDetails,
+    public List<SkillBasicDto> getMySkills(@AuthenticationPrincipal UserDetails userDetails,
                                       @RequestParam int pageNum,
                                       @RequestParam int pageSize) {
         return skillService.getSkills(userDetails.getUsername(), pageNum, pageSize);
     }
 
+    @GetMapping("/skill/create-form")
+    public String createSkillForm(@AuthenticationPrincipal UserDetails userDetails,
+                                  Model model) {
+        model.addAttribute("skill", new SkillCreateDto());
+        return "addSkill";
+    }
+
     @PostMapping("/skill")
     public SkillDto addSkill(@AuthenticationPrincipal UserDetails userDetails,
-                          @RequestBody SkillCreateDto skillDto) {
+                          @ModelAttribute SkillCreateDto skillDto) {
         return skillService.add(userDetails.getUsername(), skillDto);
     }
 

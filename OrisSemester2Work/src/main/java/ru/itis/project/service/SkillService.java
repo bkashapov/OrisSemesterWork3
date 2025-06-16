@@ -7,11 +7,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 import ru.itis.project.dictionary.LessonStatus;
-import ru.itis.project.dto.RateDto;
-import ru.itis.project.dto.RateFormDto;
-import ru.itis.project.dto.SkillCreateDto;
-import ru.itis.project.dto.SkillDto;
+import ru.itis.project.dto.*;
 import ru.itis.project.entity.*;
 import ru.itis.project.exception.BadRequestException;
 import ru.itis.project.exception.NoRightsException;
@@ -29,42 +27,46 @@ public class SkillService {
 
     private final SkillRepository skillRepository;
     private final LessonRepository lessonRepository;
+    private final LectureRepository lectureRepository;
+    private final CommentRepository commentRepository;
     private final UserRepository userRepository;
     private final CategoryRepository categoryRepository;
     private final RateRepository rateRepository;
     private final SkillDtoMapper skillDtoMapper;
     private final RateDtoMapper rateDtoMapper;
+    private final ImageService imageService;
 
 
-    public List<SkillDto> getSkills(String username, int pageNumber, int pageSize) {
+    public List<SkillBasicDto> getSkills(String username, int pageNumber, int pageSize) {
         Pageable pageable = PageRequest.of(0, 5, Sort.by(Sort.Direction.ASC, "avgRating"));
-        return skillDtoMapper.toSkillDtoList(skillRepository.findAllByUsername(username, pageable));
+        return skillRepository.findAllByUsername(username, pageable).stream().map(skillDtoMapper::toSkillBasicDto).toList();
     }
 
-    public SkillDto getSkill(String username, int skillId) {
+    public SkillDto getSkill(String username, Long skillId) {
         Skill skill = skillRepository.findById(skillId);
         verify(skill, username);
-        return skillDtoMapper.toSkillDto(skill);
+        return skillDtoMapper
+                .toSkillDto(
+                        skill,
+                        lessonRepository.countAllByTeacherSkillId(skillId),
+                        lectureRepository.countAllBySkillId(skillId),
+                        commentRepository.countAllBySkillId(skillId));
     }
 
     @Transactional
     public SkillDto add(String username, SkillCreateDto skillDto) {
         Optional<Category> optionalCategory = categoryRepository.
-                findByName(skillDto.category().toLowerCase());
+                findByName(skillDto.getCategory().toLowerCase());
         if (optionalCategory.isEmpty()) {
-            optionalCategory = Optional.of(new Category().setName(skillDto.category()));
+            optionalCategory = Optional.of(new Category().setName(skillDto.getCategory()));
             categoryRepository.save(optionalCategory.get());
         }
         Category category = optionalCategory.get();
         User user = userRepository.findByUsername(username).orElseThrow(UserNotFoundException::new);
-        Skill skill = new Skill()
-                .setName(skillDto.name())
-                .setCategory(category)
-                .setDescription(skillDto.description())
-                .setRating(0.0)
-                .setUser(user);
+        Skill skill = skillDtoMapper.toSkill(skillDto, category, user);
+        skill.setImageFilename(skillDto.getFile() != null ? imageService.saveMultipartFile(skillDto.getFile()) : ImageService.DEFAULT_IMAGE_FILENAME);
         skillRepository.save(skill);
-        return skillDtoMapper.toSkillDto(skill);
+        return skillDtoMapper.toSkillDto(skill, 0, 0, 0);
     }
 
     public boolean signUp(String username, int skillId, UserDetails authenticatedUser) {

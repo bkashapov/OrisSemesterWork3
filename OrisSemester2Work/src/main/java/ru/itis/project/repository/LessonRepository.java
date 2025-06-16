@@ -6,6 +6,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 import ru.itis.project.dictionary.LessonStatus;
 import ru.itis.project.entity.Lesson;
+import ru.itis.project.entity.Skill;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,6 +17,8 @@ public interface LessonRepository extends PagingAndSortingRepository<Lesson, Lon
     void save(Lesson lesson);
 
     Optional<Lesson> findById(Long id);
+
+    int countAllByTeacherSkillId(Long id);
 
     @Query("UPDATE Lesson l SET l.status = :status WHERE l.id = :id")
     void updateStatus(Long id, LessonStatus status);
