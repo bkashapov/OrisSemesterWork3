@@ -4,6 +4,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const closeBtn = modal.querySelector(".close-btn");
     const errorMsg = document.getElementById("loginError");
     const waitMsg = document.getElementById("wait");
+    const username = document.getElementById("username");
+    const password = document.getElementById("password");
 
     loginBtn.addEventListener("click", () => {
         modal.style.display = "flex"; // показать
@@ -13,6 +15,8 @@ document.addEventListener("DOMContentLoaded", () => {
         modal.style.display = "none";
         errorMsg.style.display = "none";
         waitMsg.style.display = "none";// скрыть
+        username.value = "";
+        password.value = "";
     });
 });
 
@@ -36,7 +40,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         if (response.ok) {
-            // Успешная авторизация — перезагрузить страницу
             location.reload();
         } else {
             waitMsg.style.display = "none";

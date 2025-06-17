@@ -1,0 +1,82 @@
+.skills-wrapper {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+h2 {
+    margin-bottom: 20px;
+    font-size: 1.8em;
+    color: #333;
+}
+
+.skill-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 12px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.skill-row-image {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.skill-row-texts {
+    flex: 1;
+}
+
+.skill-row-name-rating {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.skill-name {
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.skill-rating {
+    color: #777;
+    font-size: 0.9em;
+}
+
+.skill-description {
+    margin-top: 6px;
+    color: #444;
+    font-size: 0.95em;
+}
+
+.skill-row-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    transition: background-color 0.2s;
+    border-radius: 8px;
+    padding: 10px;
+}
+
+.skill-row-link:hover {
+    background-color: #f0f0f0;
+}
+
+.pagination {
+    margin-top: 15px;
+}
+.pagination button {
+    margin: 0 3px;
+    padding: 6px 10px;
+    border-radius: 5px;
+    border: 1px solid #aaa;
+    cursor: pointer;
+    background-color: white;
+}
+.pagination button:disabled {
+    background-color: #ddd;
+    cursor: default;
+}

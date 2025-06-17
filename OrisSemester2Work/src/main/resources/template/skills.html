@@ -2,18 +2,39 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
+    <title>Skills</title>
     <link rel="stylesheet" th:href="@{/css/header.css}">
     <link rel="stylesheet" th:href="@{/css/button.css}">
     <link rel="stylesheet" th:href="@{/css/login.css}">
+    <link rel="stylesheet" th:href="@{/css/skills.css}">
+    <link rel="stylesheet" th:href="@{/css/breadcrumbs.css}">
     <script defer th:src="@{/js/login.js}"></script>
+    <script defer th:src="@{/js/skill-search.js}"></script>
 </head>
-
 <body>
 
 <div th:replace="fragments/header"></div>
 
 <div th:replace="fragments/login-form"></div>
+
+<div class="skills-wrapper">
+    <div class="breadcrumbs">
+        <a th:href="@{/user}">users</a>
+        <span>/</span>
+        <a th:href="@{/user/{username}(username=${skillUsername})}"
+           th:text="${skillUsername}">Username</a>
+        <span>/</span>
+        <a th:href="@{/user/{username}/skill(username=${skillUsername})}">skills</a>
+    </div>
+
+    <h2 th:text="${skillUsername} + ' skills'">User skills</h2>
+
+    <input type="text" id="skillSearchInput" placeholder="Search skills..."/>
+    <div id="skillsList"></div>
+    <p id="noResultsMsg" style="display:none;">Ничего не найдено</p>
+    <div id="pagination" class="pagination"></div>
+</div>
+
 
 
 </body>

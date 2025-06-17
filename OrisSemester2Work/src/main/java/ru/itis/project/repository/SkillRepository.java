@@ -1,5 +1,6 @@
 package ru.itis.project.repository;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -24,4 +25,8 @@ public interface SkillRepository extends PagingAndSortingRepository<Skill, Long>
     @Transactional
     @Query("UPDATE Skill s SET s.rating = :newRate, s.ratingCount = :newCount WHERE s.id = :id")
     void updateRatingAndRatingCount(Long id, Double newRate, int newCount);
+
+
+    @Query("SELECT s FROM Skill s JOIN FETCH User u ON u = s.user WHERE LOWER(s.name) LIKE LOWER(:query)")
+    Page<Skill> findAllByUsernameAndQuery(String username, String query, Pageable pageable);
 }

@@ -1,0 +1,35 @@
+spring:
+  application:
+    name: oris-semester-work
+  datasource:
+    url: jdbc:postgresql://localhost:5435/postgres
+    username: user
+    password: pass
+  jpa:
+    hibernate:
+      ddl-auto: update
+  thymeleaf:
+    prefix: classpath:/template/
+    suffix: .html
+    encoding: UTF-8
+    mode: HTML
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: rate-consumer-group
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      auto-offset-reset: earliest
+logging:
+  level:
+    root: info
+    org.springframework.web: debug
+    org.springframework.security: debug
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+  file:
+    name: logs/app.log
+jwt:
+  secret: aaaaaaaaaaaaaaaaaaaaaaaaa
+  access-token:
+    ttl: 100000

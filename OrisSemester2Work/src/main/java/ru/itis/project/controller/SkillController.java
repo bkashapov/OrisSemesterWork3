@@ -18,10 +18,11 @@ public class SkillController {
 
     @GetMapping
     public String getSkills(@PathVariable String username,
-                                    @RequestParam int pageNum,
-                                    @RequestParam int pageSize,
+                                    @RequestParam(required = false, defaultValue = "0") int pageNum,
+                                    @RequestParam(required = false, defaultValue = "12") int pageSize,
                                     Model model) {
         model.addAttribute("skills", skillService.getSkills(username, pageNum, pageSize));
+        model.addAttribute("skillUsername", username);
         return "skills";
     }
 

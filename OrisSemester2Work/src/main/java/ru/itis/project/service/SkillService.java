@@ -1,6 +1,7 @@
 package ru.itis.project.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -38,7 +39,7 @@ public class SkillService {
 
 
     public List<SkillBasicDto> getSkills(String username, int pageNumber, int pageSize) {
-        Pageable pageable = PageRequest.of(0, 5, Sort.by(Sort.Direction.ASC, "avgRating"));
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by(Sort.Direction.ASC, "rating"));
         return skillRepository.findAllByUsername(username, pageable).stream().map(skillDtoMapper::toSkillBasicDto).toList();
     }
 
@@ -114,5 +115,12 @@ public class SkillService {
         Double newRate = (skill.getRating() * skill.getRatingCount() + rateDto.rate()) / skill.getRatingCount();
 
         skillRepository.updateRatingAndRatingCount(skill.getId(), newRate, skill.getRatingCount() + 1);
+    }
+
+    public Page<SkillBasicDto> getSkillsByUsernameAndQuery(String username, String query, Integer pageNum, Integer pageSize) {
+        Pageable pageable = PageRequest.of(pageNum, pageSize, Sort.by(Sort.Direction.ASC, "rating"));
+        String pattern = '%' + query + '%';
+        Page<Skill> skills =  skillRepository.findAllByUsernameAndQuery(username, pattern, pageable);
+        return skills.map(skillDtoMapper::toSkillBasicDto);
     }
 }

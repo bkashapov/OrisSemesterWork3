@@ -13,4 +13,5 @@ public class SkillBasicDto {
     String description;
     String imageFilename;
     boolean isArchived;
+
 }
