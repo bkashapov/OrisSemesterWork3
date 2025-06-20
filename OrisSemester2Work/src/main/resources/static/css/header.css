@@ -42,6 +42,10 @@ html, body {
     border-radius: 50%;
 }
 
+.user-icon:hover {
+    cursor: pointer;
+}
+
 .auth-buttons {
     display: flex;
     gap: 10px;
@@ -54,4 +58,42 @@ html, body {
 
 .logo {
     height: 30px;
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    right: -300px;
+    width: 260px;
+    height: 100%;
+    background-color: white;
+    box-shadow: -2px 0 10px rgba(0,0,0,0.2);
+    transition: right 0.3s ease-in-out;
+    z-index: 1000;
+    padding: 20px;
+}
+.sidebar.visible {
+    right: 0;
+}
+.sidebar.hidden {
+    right: -300px;
+}
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+}
+.sidebar-link {
+    display: block;
+    margin: 16px 0;
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+}
+.sidebar-link:hover {
+    color: #007bff;
 }

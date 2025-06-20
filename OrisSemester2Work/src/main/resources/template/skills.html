@@ -5,9 +5,10 @@
     <title>Skills</title>
     <link rel="stylesheet" th:href="@{/css/header.css}">
     <link rel="stylesheet" th:href="@{/css/button.css}">
-    <link rel="stylesheet" th:href="@{/css/login.css}">
+    <link rel="stylesheet" th:href="@{/css/modal.css}">
     <link rel="stylesheet" th:href="@{/css/skills.css}">
     <link rel="stylesheet" th:href="@{/css/breadcrumbs.css}">
+    <script defer th:src="@{/js/header.js}"></script>
     <script defer th:src="@{/js/login.js}"></script>
     <script defer th:src="@{/js/skill-search.js}"></script>
 </head>
@@ -15,7 +16,9 @@
 
 <div th:replace="fragments/header"></div>
 
-<div th:replace="fragments/login-form"></div>
+<div th:replace="fragments/login-modal-form"></div>
+
+<div th:text="${skillUsername}" id="skillUsername" style="display: none">Username</div>
 
 <div class="skills-wrapper">
     <div class="breadcrumbs">
@@ -31,7 +34,7 @@
 
     <input type="text" id="skillSearchInput" placeholder="Search skills..."/>
     <div id="skillsList"></div>
-    <p id="noResultsMsg" style="display:none;">Ничего не найдено</p>
+    <p id="noResultsMsg" style="display:none;">Nothing found</p>
     <div id="pagination" class="pagination"></div>
 </div>
 

@@ -1,5 +1,4 @@
 <header class="navbar-top">
-    <!-- Левая часть: гамбургер и название -->
     <div class="navbar-left">
         <img src="/images/logo.png" alt="logo" class="logo">
     </div>
@@ -7,9 +6,7 @@
     <!-- Правая часть: авторизация -->
     <div class="navbar-right">
         <div th:if="${user != null}">
-            <a href="/profile">
-                <img th:src="${user.avatarFilename}" alt="User" class="user-icon">
-            </a>
+            <img th:src="${user.avatarFilename}" alt="User" class="user-icon" id="user-icon">
         </div>
         <div th:if="${user == null}" class="auth-buttons">
             <button class="custom-button custom-button-1" id="loginBtn">Log In</button>
@@ -19,3 +16,17 @@
         </div>
     </div>
 </header>
+
+<div th:if="${user != null}" id="sidebar" class="sidebar hidden">
+    <button id="closeSidebar" class="close-button">✕</button>
+    <div class="sidebar-content">
+        <!-- сюда можешь добавить любой контент -->
+        <p>Welcome, <span th:text="${user.username}">username</span>!</p>
+        <a href="/me" class="sidebar-link">My Profile</a>
+        <a href="/me/skill" class="sidebar-link">My Skills</a>
+        <a href="/me/lesson" class="sidebar-link">My Lessons</a>
+        <form id="logout-form" method="post" action="/logout">
+            <button type="submit" class="custom-button custom-button-2">Logout</button>
+        </form>
+    </div>
+</div>

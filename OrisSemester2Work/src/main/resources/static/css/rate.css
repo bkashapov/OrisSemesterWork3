@@ -1,0 +1,23 @@
+.review-form {
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background-color: #f7f7f7;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+}
+
+.review-form label {
+    display: block;
+    margin-bottom: 0.3rem;
+    font-weight: bold;
+}
+
+.review-form textarea,
+.review-form input[type="number"] {
+    width: 100%;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 1rem;
+}

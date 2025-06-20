@@ -1,0 +1,105 @@
+/* Обёртка вокруг формы */
+.skill-form-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+    margin-bottom: 60px;
+}
+
+/* Сама форма */
+.skill-form {
+    background-color: white;
+    padding: 30px 40px;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+    width: 100%;
+    max-width: 450px;
+}
+
+.skill-form h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.skill-form label {
+    display: block;
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+.skill-form input[type="text"],
+.skill-form textarea,
+.skill-form input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+.skill-form textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.skill-form button {
+    margin-top: 20px;
+    width: 100%;
+    padding: 12px;
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+}
+
+.skill-form button:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+
+.hidden {
+    display: none;
+}
+
+.dynamic-text-form {
+    margin: 40px auto;
+    max-width: 500px;
+    background-color: #fff;
+    padding: 30px;
+    border: 1px solid #ccc;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.inputs-container .input-group {
+    margin-bottom: 12px;
+}
+
+.inputs-container input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.button-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    justify-content: flex-end;
+}
+
+.button-row button {
+    padding: 10px 16px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+}

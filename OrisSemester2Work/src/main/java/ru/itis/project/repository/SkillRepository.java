@@ -27,6 +27,6 @@ public interface SkillRepository extends PagingAndSortingRepository<Skill, Long>
     void updateRatingAndRatingCount(Long id, Double newRate, int newCount);
 
 
-    @Query("SELECT s FROM Skill s JOIN FETCH User u ON u = s.user WHERE LOWER(s.name) LIKE LOWER(:query)")
+    @Query("SELECT s FROM Skill s JOIN FETCH User u ON u = s.user WHERE LOWER(s.name) LIKE LOWER(:query) AND u.username = :username")
     Page<Skill> findAllByUsernameAndQuery(String username, String query, Pageable pageable);
 }

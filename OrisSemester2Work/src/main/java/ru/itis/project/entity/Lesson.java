@@ -31,4 +31,10 @@ public class Lesson {
 
     @Enumerated
     private LessonStatus status;
+
+    @Column(length = 600)
+    private String teacherZoomUrl;
+
+    @Column(length = 600)
+    private String studentZoomUrl;
 }

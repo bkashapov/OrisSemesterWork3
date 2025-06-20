@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     const input = document.getElementById('skillSearchInput');
     const skillsList = document.getElementById('skillsList');
-    const username = window.location.pathname.split('/')[2];
+    const username = document.getElementById("skillUsername").innerHTML;
     const noResultsMsg = document.getElementById('noResultsMsg') || createNoResultsMsg();
     const paginationContainer = document.getElementById('pagination') || createPaginationContainer();
 
@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function createNoResultsMsg() {
         const msg = document.createElement('p');
         msg.id = 'noResultsMsg';
-        msg.textContent = 'Ничего не найдено';
+        msg.textContent = 'Nothing found';
         msg.style.display = 'none';
         skillsList.parentNode.insertBefore(msg, skillsList.nextSibling);
         return msg;
@@ -38,8 +38,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     async function fetchSkills(query, page) {
         try {
+
+            console.log(username);
             const response = await fetch(
-                `/api/v1/user/{username}/skill?query=${encodeURIComponent(query)}&pageNum=${page}&pageSize=${pageSize}`
+                `/api/v1/user/${username}/skill?query=${encodeURIComponent(query)}&pageNum=${page}&pageSize=${pageSize}`
             );
             const result = await response.json();
             const skills = result.content;

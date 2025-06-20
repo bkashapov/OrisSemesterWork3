@@ -5,15 +5,15 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import ru.itis.project.dictionary.LessonStatus;
-import ru.itis.project.dto.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import ru.itis.project.dto.SkillCreateDto;
+import ru.itis.project.dto.UserPageDto;
 import ru.itis.project.service.HomepageService;
 import ru.itis.project.service.LessonService;
 import ru.itis.project.service.NotificationService;
 import ru.itis.project.service.SkillService;
-
-import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -28,49 +28,41 @@ public class MeController {
     @GetMapping
     public String homepage(@AuthenticationPrincipal UserDetails userDetails,
                                 Model model) {
-        model.addAttribute("homepage", homepageService.getHomepage(userDetails));
-        return "homepage";
+        UserPageDto userPageDto = homepageService.getHomepage(userDetails.getUsername());
+        model.addAttribute("user", userPageDto.user());
+        model.addAttribute("skills", userPageDto.skills());
+        return "me";
+    }
+    @GetMapping("/skill/{skillId}")
+    public String getMySkill(@AuthenticationPrincipal UserDetails userDetails,
+                               @PathVariable Long skillId,
+                               Model model) {
+        model.addAttribute("skill", skillService.getSkill(userDetails.getUsername(), skillId));
+        return "my-skill";
     }
 
     @GetMapping("/skill")
-    public List<SkillBasicDto> getMySkills(@AuthenticationPrincipal UserDetails userDetails,
-                                      @RequestParam int pageNum,
-                                      @RequestParam int pageSize) {
-        return skillService.getSkills(userDetails.getUsername(), pageNum, pageSize);
+    public String getMySkills(@AuthenticationPrincipal UserDetails userDetails,
+                              Model model) {
+        model.addAttribute("skillUsername", userDetails.getUsername());
+        return "my-skills";
     }
 
     @GetMapping("/skill/create-form")
     public String createSkillForm(@AuthenticationPrincipal UserDetails userDetails,
                                   Model model) {
         model.addAttribute("skill", new SkillCreateDto());
-        return "addSkill";
-    }
-
-    @PostMapping("/skill")
-    public SkillDto addSkill(@AuthenticationPrincipal UserDetails userDetails,
-                          @ModelAttribute SkillCreateDto skillDto) {
-        return skillService.add(userDetails.getUsername(), skillDto);
+        return "skill-create";
     }
 
     @GetMapping("/lesson")
-    public List<LessonDto> getMyLessons(@AuthenticationPrincipal UserDetails userDetails,
-                                        @RequestParam int pageNum,
-                                        @RequestParam int pageSize) {
-        return lessonService.getLessons(userDetails.getUsername(), pageNum, pageSize);
+    public String getMyLessons(@AuthenticationPrincipal UserDetails userDetails) {
+        return "lessons";
     }
 
-    @PatchMapping("/lesson/{lessonId}")
-    public void updateLessonStatus(@AuthenticationPrincipal UserDetails userDetails,
-                                   @PathVariable Long lessonId,
-                                   @RequestBody LessonStatus status) {
-        lessonService.updateLessonStatus(userDetails.getUsername(), lessonId, status);
-    }
-
-    @GetMapping("/notification")
-    public List<NotificationDto> getNotifications(@AuthenticationPrincipal UserDetails userDetails,
-                                                  @RequestParam int pageNum,
-                                                  @RequestParam int pageSize) {
-        return notificationService.getNotifications(userDetails, pageNum, pageSize);
+    @GetMapping("/request")
+    public String getRequests(@AuthenticationPrincipal UserDetails userDetails) {
+        return "requests";
     }
 
 

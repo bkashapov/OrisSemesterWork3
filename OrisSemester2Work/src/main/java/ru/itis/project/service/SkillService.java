@@ -8,7 +8,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 import ru.itis.project.dictionary.LessonStatus;
 import ru.itis.project.dto.*;
 import ru.itis.project.entity.*;
@@ -49,7 +48,7 @@ public class SkillService {
         return skillDtoMapper
                 .toSkillDto(
                         skill,
-                        lessonRepository.countAllByTeacherSkillId(skillId),
+                        lessonRepository.countCompleteByTeacherSkillId(skillId),
                         lectureRepository.countAllBySkillId(skillId),
                         commentRepository.countAllBySkillId(skillId));
     }
@@ -65,7 +64,7 @@ public class SkillService {
         Category category = optionalCategory.get();
         User user = userRepository.findByUsername(username).orElseThrow(UserNotFoundException::new);
         Skill skill = skillDtoMapper.toSkill(skillDto, category, user);
-        skill.setImageFilename(skillDto.getFile() != null ? imageService.saveMultipartFile(skillDto.getFile()) : ImageService.DEFAULT_IMAGE_FILENAME);
+        skill.setImageFilename(skillDto.getFile() != null && !skillDto.getFile().isEmpty() ? imageService.saveMultipartFile(skillDto.getFile()) : ImageService.DEFAULT_IMAGE_FILENAME);
         skillRepository.save(skill);
         return skillDtoMapper.toSkillDto(skill, 0, 0, 0);
     }
@@ -85,37 +84,11 @@ public class SkillService {
 
     private User verify(Skill skill, String username) {
         if (!skill.getUser().getUsername().equals(username)) {
-            throw new BadRequestException();
+            throw new BadRequestException(skill.getUser().getUsername() + "not equal to " + username);
         }
         return skill.getUser();
     }
 
-    public List<RateDto> getRatesOfSkill(String username, Long skillId, int pageNum, int pageSize) {
-        Skill skill = skillRepository.findById(skillId);
-        verify(skill, username);
-        return rateDtoMapper.toDto(
-                rateRepository.findAllBySkillId(
-                        skillId,
-                        PageRequest.of(pageNum, pageSize, Sort.by(Sort.Direction.ASC, "rating"))));
-    }
-
-    public void addRate(String username, Long skillId, RateFormDto rateDto, String authenticatedUsername) {
-        Skill skill = skillRepository.findById(skillId);
-        verify(skill, username);
-        if (lessonRepository.
-                findAllByTeacherUsernameAndStudentUsernameAndStatus(authenticatedUsername, LessonStatus.COMPLETE).isEmpty() ||
-        rateRepository.findBySkillIdAndRaterUsername(skillId, authenticatedUsername).isPresent()) {
-            throw new NoRightsException();
-        }
-        User user = userRepository.findByUsername(authenticatedUsername).orElseThrow(UserNotFoundException::new);
-        Rate rate = rateDtoMapper.toEntity(rateDto)
-                .setSkill(skill)
-                .setRater(user);
-        rateRepository.save(rate);
-        Double newRate = (skill.getRating() * skill.getRatingCount() + rateDto.rate()) / skill.getRatingCount();
-
-        skillRepository.updateRatingAndRatingCount(skill.getId(), newRate, skill.getRatingCount() + 1);
-    }
 
     public Page<SkillBasicDto> getSkillsByUsernameAndQuery(String username, String query, Integer pageNum, Integer pageSize) {
         Pageable pageable = PageRequest.of(pageNum, pageSize, Sort.by(Sort.Direction.ASC, "rating"));

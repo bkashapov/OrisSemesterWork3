@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${skill.name}">Skill page</title>
+    <link rel="stylesheet" th:href="@{/css/skill.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/button.css}">
+    <link rel="stylesheet" th:href="@{/css/modal.css}">
+    <link rel="stylesheet" th:href="@{/css/breadcrumbs.css}">
+    <link rel="stylesheet" th:href="@{/css/skills.css}">
+    <link rel="stylesheet" th:href="@{/css/rate.css}">
+    <link rel="stylesheet" th:href="@{/css/request.css}">
+    <script defer th:src="@{/js/header.js}"></script>
+    <script defer th:src="@{/js/login.js}"></script>
+    <script defer th:src="@{/js/skill-enroll.js}"></script>
+    <script defer th:src="@{/js/rate.js}"></script>
+</head>
+<body>
+
+<div th:replace="fragments/header"></div>
+
+<div th:replace="fragments/login-modal-form"></div>
+
+<div class="container">
+    <div class="top-image">
+        <img th:src="${skill.imageFilename}" alt="Banner">
+    </div>
+
+    <div class="bottom-wrapper">
+        <div class="main-content">
+            <div class="breadcrumbs">
+                <a th:href="@{/user}">users</a>
+                <span>/</span>
+                <a th:href="@{/user/{username}(username=${skill.username})}"
+                   th:text="${skill.username}">Username</a>
+                <span>/</span>
+                <a th:href="@{/user/{username}/skill(username=${skill.username})}">skills</a>
+                <span>/</span>
+                <a th:href="@{/user/{username}/skill/{id}(username=${skill.username}, id=${skill.id})}"
+                   th:text="${skill.name}">Skill name</a>
+                <span>/</span>
+                <a th:href="@{/user/{username}/skill/{id}/review(username=${skill.username}, id=${skill.id})}">reviews</a>
+            </div>
+            <div class="skill-header">
+                <h2 th:text="${skill.name}">Skill name</h2>
+                <button id="enroll"
+                        class="custom-button custom-button-1"
+                        th:attr="data-username=${skill.username}, data-skill-id=${skill.id}"
+                        th:disabled="${user == null || skill.isArchived}">
+                    Enroll
+                </button>
+            </div>
+            <p style="font-size: 12px; color: red;" th:if="${skill.isArchived}">(Archived)</p>
+
+
+            <nav class="skill-navbar">
+                <ul>
+                    <li><a th:href="@{/user/{username}/skill/{skillId}(username=${skill.username}, skillId=${skill.id})}" >Main</a></li>
+                    <li><a href="#" th:text="'Comments(' + ${skill.commentCount} + ')'">Comments</a></li>
+                    <li><a href="#" th:text="'Reviews(' + ${skill.ratingCount} + ')'" style="color: black">Reviews</a></li>
+                </ul>
+            </nav>
+
+            <div class="skill-content-row">
+                <div class="skill-description">
+                    <h3>Reviews</h3>
+                    <form th:action="@{/api/v1/user/{username}/skill/{id}/review(username=${skill.username},id=${skill.id})}" method="post" class="review-form">
+                        <div>
+                            <label for="rateMessage">Leave a review (max 100 chars):</label>
+                            <textarea id="rateMessage" name="message" maxlength="100" rows="3"
+                                      placeholder="Your review..."></textarea>
+                        </div>
+                        <div>
+                            <label for="rateValue">Rating (1–5):</label>
+                            <input type="number" id="rateValue" name="rate" min="1" max="5" required>
+                        </div>
+                        <button class="custom-button custom-button-1" type="submit" th:attr="disabled=${user == null}"
+                        >Submit</button>
+                    </form>
+                    <div id="rates" th:if="${rates != null and rates.totalElements > 0}">
+                            <div class="skill-row" style="display: block" th:each="rate : ${rates}">
+                                <strong th:text="${rate.raterUsername}">Username</strong>
+                                <span th:text="' — ' + ${rate.rate} + '/5'">Rate</span>
+                                <p th:text="${rate.message}">Review message</p>
+                            </div>
+
+                        <!-- Пагинация -->
+                        <div class="pagination">
+                            <a th:if="${!rates.first}"
+                               th:href="@{${baseUrl}(pageNum=${rates.number - 1})}">« Prev</a>
+                            <a th:if="${!rates.last}"
+                               th:href="@{${baseUrl}(pageNum=${rates.number + 1})}">Next »</a>
+                        </div>
+                    </div>
+
+                    <p id="no-rates-msg" th:if="${rates == null or rates.totalElements == 0}">No reviews yet.</p>
+                </div>
+                <div class="skill-stats">
+                    <div class="stat-item">
+                        <h4>Rating</h4>
+                        <p th:text="${#numbers.formatDecimal(skill.rating, 1, 2)}">rating</p>
+                    </div>
+                    <div class="stat-item">
+                        <h4>Lessons taught</h4>
+                        <p th:text="${skill.lessonCount}">lessons</p>
+                    </div>
+                    <div class="stat-item">
+                        <h4>Lectures held</h4>
+                        <p th:text="${skill.lectureCount}">lectures</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+<div id="enroll-modal" class="modal">
+    <div class="modal-content" id="modal-content">
+        <span class="close-btn" id="enroll-close-btn">&times;</span>
+        <h2>Choose Schedule Range</h2>
+        <select id="schedule-range">
+            <option value="7">Next 7 Days</option>
+            <option value="30">Next 30 Days</option>
+        </select>
+
+        <div id="slots-container" class="slots-scrollable">
+            <!-- Сюда вставляются слоты -->
+        </div>
+
+        <button id="confirm-enroll" class="custom-button custom-button-2">Enroll</button>
+    </div>
+</div>
+
+<div id="success-message" class="success-message hidden">
+    Request has been sent. Wait for the response
+</div>
+
+<div id="rate-error-message" class="error-message hidden"></div>
+
+</body>
+</html>

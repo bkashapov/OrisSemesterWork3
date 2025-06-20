@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.itis.project.dto.RateFormDto;
+import ru.itis.project.service.ReviewService;
 import ru.itis.project.service.SkillService;
 
 @Controller
@@ -15,21 +16,23 @@ import ru.itis.project.service.SkillService;
 public class SkillController {
 
     private final SkillService skillService;
+    private final ReviewService reviewService;
 
     @GetMapping
     public String getSkills(@PathVariable String username,
-                                    @RequestParam(required = false, defaultValue = "0") int pageNum,
-                                    @RequestParam(required = false, defaultValue = "12") int pageSize,
                                     Model model) {
-        model.addAttribute("skills", skillService.getSkills(username, pageNum, pageSize));
         model.addAttribute("skillUsername", username);
         return "skills";
     }
 
     @GetMapping("/{skillId}")
-    public String getSkill(@PathVariable String username,
+    public String getSkill(@AuthenticationPrincipal UserDetails userDetails,
+                           @PathVariable String username,
                              @PathVariable Long skillId,
                              Model model) {
+        if (userDetails != null && userDetails.getUsername().equals(username)) {
+            return "redirect:/me/skill/" + skillId;
+        }
         model.addAttribute("skill", skillService.getSkill(username, skillId));
         return "skill";
     }
@@ -43,22 +46,24 @@ public class SkillController {
         return "skill";
     }
 
-    @GetMapping("/{skillId}/rate")
+    @GetMapping("/{skillId}/review")
     public String getRates(@PathVariable String username,
                                   @PathVariable Long skillId,
-                                  @RequestParam int pageNum,
-                                  @RequestParam int pageSize,
+                                  @RequestParam(required = false, defaultValue = "0") int pageNum,
+                                  @RequestParam(required = false, defaultValue = "5") int pageSize,
                                   Model model) {
-        model.addAttribute("rates", skillService.getRatesOfSkill(username, skillId, pageNum, pageSize));
+        model.addAttribute("skill", skillService.getSkill(username, skillId));
+        model.addAttribute("rates", reviewService.getRatesOfSkill(username, skillId, pageNum, pageSize));
         return "rates";
     }
 
-    @PostMapping("/{skillId}/rate")
+    @PostMapping("/{skillId}/review")
     public void rate(@AuthenticationPrincipal UserDetails userDetails,
                      @PathVariable String username,
                      @PathVariable Long skillId,
                      @RequestBody RateFormDto rateDto) {
-        skillService.addRate(username, skillId, rateDto, userDetails.getUsername());
+
+        reviewService.addRate(username, skillId, rateDto, userDetails.getUsername());
     }
 
 

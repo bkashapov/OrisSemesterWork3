@@ -6,16 +6,17 @@
     <link rel="stylesheet" th:href="@{/css/skill.css}">
     <link rel="stylesheet" th:href="@{/css/header.css}">
     <link rel="stylesheet" th:href="@{/css/button.css}">
-    <link rel="stylesheet" th:href="@{/css/login.css}">
+    <link rel="stylesheet" th:href="@{/css/modal.css}">
     <link rel="stylesheet" th:href="@{/css/breadcrumbs.css}">
     <script defer th:src="@{/js/header.js}"></script>
     <script defer th:src="@{/js/login.js}"></script>
+    <script defer th:src="@{/js/skill-enroll.js}"></script>
 </head>
 <body>
 
 <div th:replace="fragments/header"></div>
 
-<div th:replace="fragments/login-form"></div>
+<div th:replace="fragments/login-modal-form"></div>
 
 <div class="container">
     <div class="top-image">
@@ -37,7 +38,12 @@
             </div>
             <div class="skill-header">
                 <h2 th:text="${skill.name}">Skill name</h2>
-                <button class="custom-button custom-button-1" th:disabled="${user == null || skill.isArchived}">Enroll</button>
+                <button id="enroll"
+                        class="custom-button custom-button-1"
+                        th:attr="data-username=${skill.username}, data-skill-id=${skill.id}"
+                        th:disabled="${user == null || skill.isArchived}">
+                    Enroll
+                </button>
             </div>
             <p style="font-size: 12px; color: red;" th:if="${skill.isArchived}">(Archived)</p>
 
@@ -46,7 +52,7 @@
                 <ul>
                     <li><a href="#" style="color: black">Main</a></li>
                     <li><a href="#" th:text="'Comments(' + ${skill.commentCount} + ')'">Comments</a></li>
-                    <li><a href="#"th:text="'Reviews(' + ${skill.ratingCount} + ')'">Reviews</a></li>
+                    <li><a th:href="@{/user/{username}/skill/{skillId}/review(username=${skill.username}, skillId=${skill.id})}" th:text="'Reviews(' + ${skill.ratingCount} + ')'">Reviews</a></li>
                 </ul>
             </nav>
 
@@ -74,6 +80,26 @@
         </div>
     </div>
 
+</div>
+<div id="enroll-modal" class="modal">
+    <div class="modal-content" id="modal-content">
+        <span class="close-btn" id="enroll-close-btn">&times;</span>
+        <h2>Choose Schedule Range</h2>
+        <select id="schedule-range">
+            <option value="7">Next 7 Days</option>
+            <option value="30">Next 30 Days</option>
+        </select>
+
+        <div id="slots-container" class="slots-scrollable">
+            <!-- Сюда вставляются слоты -->
+        </div>
+
+        <button id="confirm-enroll" class="custom-button custom-button-2">Enroll</button>
+    </div>
+</div>
+
+<div id="success-message" class="success-message hidden">
+    Request has been sent. Wait for the response
 </div>
 
 </body>

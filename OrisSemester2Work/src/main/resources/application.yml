@@ -1,4 +1,8 @@
 spring:
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
   application:
     name: oris-semester-work
   datasource:
@@ -29,7 +33,7 @@ logging:
     console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
   file:
     name: logs/app.log
-jwt:
-  secret: aaaaaaaaaaaaaaaaaaaaaaaaa
-  access-token:
-    ttl: 100000
+zoom:
+  client-id:${ZOOM_CLIENT_ID}
+  client-secret:${ZOOM_CLIENT_SECRET}
+  account-id:${ZOOM_ACCOUNT_ID}

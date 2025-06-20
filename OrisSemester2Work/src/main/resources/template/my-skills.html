@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Skills</title>
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/button.css}">
+    <link rel="stylesheet" th:href="@{/css/modal.css}">
+    <link rel="stylesheet" th:href="@{/css/skills.css}">
+    <link rel="stylesheet" th:href="@{/css/breadcrumbs.css}">
+    <script defer th:src="@{/js/header.js}"></script>
+    <script defer th:src="@{/js/login.js}"></script>
+    <script defer th:src="@{/js/skill-search.js}"></script>
+</head>
+<body>
+
+<div th:replace="fragments/header"></div>
+
+<div th:replace="fragments/login-modal-form"></div>
+
+<div th:text="${skillUsername}" id="skillUsername" style="display: none"></div>
+
+<div class="skills-wrapper">
+    <div class="breadcrumbs">
+        <a th:href="@{/me}">me</a>
+        <span>/</span>
+        <a th:href="@{/me/skill}">skills</a>
+    </div>
+
+    <div style="display: flex; justify-content: space-between;align-items: center">
+        <h2>My skills</h2>
+        <a th:href="@{/me/skill/create-form}" class="custom-button custom-button-2" style="display: flex;align-items: center;padding: 5px;text-decoration: none">Create new skill</a>
+    </div>
+
+
+    <input type="text" id="skillSearchInput" placeholder="Search skills..."/>
+    <div id="skillsList"></div>
+    <p id="noResultsMsg" style="display:none;">Nothing found</p>
+    <div id="pagination" class="pagination"></div>
+</div>
+
+
+
+</body>

@@ -1,0 +1,41 @@
+.content-wrapper {
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    max-width: 1000px;
+    padding: 20px;
+    margin: 40px auto;
+}
+
+.user-card {
+    flex: 1;
+    background-color: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    max-width: 200px;
+}
+
+.user-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 50%;
+    margin-bottom: 15px;
+}
+
+.user-card h2 {
+    margin: 0 0 10px;
+}
+
+.user-info p {
+    margin: 6px 0;
+    color: #444;
+    font-size: 14px;
+}
+
+.skill-list {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}

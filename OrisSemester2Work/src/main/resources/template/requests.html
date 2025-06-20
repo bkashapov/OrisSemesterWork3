@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>My Lessons</title>
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/button.css}">
+    <link rel="stylesheet" th:href="@{/css/modal.css}">
+    <link rel="stylesheet" th:href="@{/css/breadcrumbs.css}">
+    <link rel="stylesheet" th:href="@{/css/request.css}">
+    <script defer th:src="@{/js/header.js}"></script>
+    <script defer th:src="@{/js/login.js}"></script>
+    <script defer th:src="@{/js/request-fetch.js}"></script>
+</head>
+<body>
+
+<div th:replace="fragments/header"></div>
+
+<div th:replace="fragments/login-modal-form"></div>
+
+<div th:text="${user.username}" style="display:none" id="authUser"></div>
+
+<div id="request-container" class="request-container">
+    <div class="breadcrumbs">
+        <a th:href="@{/me}">me</a>
+        <span>/</span>
+        <a th:href="@{/me/request}">requests</a>
+    </div>
+    <h2>Requests</h2>
+</div>
+
+<div id="error-message" class="error-message hidden">
+    You can't accept this request. One of the lessons overlaps this
+</div>
+
+</body>
+</html>

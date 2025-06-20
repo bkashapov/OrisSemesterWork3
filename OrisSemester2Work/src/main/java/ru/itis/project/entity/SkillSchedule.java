@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 import ru.itis.project.dictionary.SkillScheduleType;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -29,4 +30,8 @@ public class SkillSchedule {
     private LocalTime startTime;
 
     private int lessonLength;
+
+    private int monthDay;
+
+    private DayOfWeek dayOfWeek;
 }

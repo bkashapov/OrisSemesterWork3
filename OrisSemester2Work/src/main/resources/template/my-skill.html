@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${skill.name}">Skill page</title>
+    <link rel="stylesheet" th:href="@{/css/skill.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/button.css}">
+    <link rel="stylesheet" th:href="@{/css/modal.css}">
+    <link rel="stylesheet" th:href="@{/css/breadcrumbs.css}">
+    <link rel="stylesheet" th:href="@{/css/skill-form.css}">
+    <script defer th:src="@{/js/header.js}"></script>
+    <script defer th:src="@{/js/login.js}"></script>
+    <script defer th:src="@{/js/skill-schedule.js}"></script>
+</head>
+<body>
+
+<div th:replace="fragments/header"></div>
+
+<div th:replace="fragments/login-modal-form"></div>
+
+<div class="container" id="skill-container">
+    <div class="top-image">
+        <img th:src="${skill.imageFilename}" alt="Banner">
+    </div>
+
+    <div class="bottom-wrapper">
+        <div class="main-content">
+            <div class="breadcrumbs">
+                <a th:href="@{/me}">me</a>
+                <span>/</span>
+                <a th:href="@{/me/skill}">skills</a>
+                <span>/</span>
+                <a th:href="@{/me/skill/{id}(id=${skill.id})}"
+                   th:text="${skill.name}">Skill name</a>
+            </div>
+            <div class="skill-header">
+                <h2 th:text="${skill.name}">Skill name</h2>
+                <p>TODO: добавить кнопку архивирования скилла</p>
+                <button id="edit-schedule"
+                        class="custom-button custom-button-1"
+                        th:attr="data-username=${skill.username}, data-skill-id=${skill.id}">
+                    Edit Schedule
+                </button>
+            </div>
+            <p style="font-size: 12px; color: red;" th:if="${skill.isArchived}">(Archived)</p>
+
+
+            <nav class="skill-navbar">
+                <ul>
+                    <li><a href="#" style="color: black">Main</a></li>
+                    <li><a href="#" th:text="'Comments(' + ${skill.commentCount} + ')'">Comments</a></li>
+                    <li><a href="#"th:text="'Reviews(' + ${skill.ratingCount} + ')'">Reviews</a></li>
+                </ul>
+            </nav>
+
+            <div class="skill-content-row">
+                <div class="skill-description">
+                    <h3>Description</h3>
+                    <p th:text="${skill.description}">Skill description</p>
+                </div>
+                <div class="skill-stats">
+                    <div class="stat-item">
+                        <h4>Rating</h4>
+                        <p th:text="${#numbers.formatDecimal(skill.rating, 1, 2)}">rating</p>
+                    </div>
+                    <div class="stat-item">
+                        <h4>Lessons taught</h4>
+                        <p th:text="${skill.lessonCount}">lessons</p>
+                    </div>
+                    <div class="stat-item">
+                        <h4>Lectures held</h4>
+                        <p th:text="${skill.lectureCount}">lectures</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<form id="extra-form" class="dynamic-text-form hidden">
+    <h3>Set the schedule</h3>
+
+    <p style="color: #666;font-size: 12px; margin: 0 0 20px;">
+        Here you can customize which days for this skill other people can sign up to tutor you.
+        If you do not configure this setting, other users will not be able to apply for this skill<br>
+        Examples:<br>
+        weekly monday 12:00 1.5h<br>
+        single-date 2025-12-31 12:00 1.5h<br>
+        monthly 15d 12:00 1.5h
+    </p>
+    <div class="inputs-container" id="inputs-container">
+        <!-- текстовые инпуты -->
+    </div>
+
+    <p style="color: red; font-size: 12px; display: none" id="scheduleErrorMsg">
+        Check your inputs for mistakes
+    </p>
+    <div class="button-row">
+        <button type="button" id="add-input" class="custom-button custom-button-1">Add new template</button>
+        <button type="submit" id="submit-inputs" class="custom-button custom-button-2">Send</button>
+    </div>
+</form>
+
+</body>
+</html>

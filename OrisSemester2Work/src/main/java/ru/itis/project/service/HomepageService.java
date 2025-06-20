@@ -29,10 +29,10 @@ public class HomepageService {
     private final SkillDtoMapper skillDtoMapper;
     private final UserDtoMapper userDtoMapper;
 
-    public UserPageDto getHomepage(UserDetails userDetails) {
+    public UserPageDto getHomepage(String username) {
         User user = userRepository.
-                findByUsername(userDetails.getUsername()).
-                orElseThrow(() -> new UserNotFoundException("user not found: " + userDetails.getUsername()));
+                findByUsername(username).
+                orElseThrow(() -> new UserNotFoundException("user not found: " + username));
 
         Pageable pageable = PageRequest.of(0, 5, Sort.by(Sort.Direction.ASC, "rating"));
         List<SkillBasicDto> skills = skillRepository.findAllByUsername(user.getUsername(), pageable).stream().map(skillDtoMapper::toSkillBasicDto).toList();

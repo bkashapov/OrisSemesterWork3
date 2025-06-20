@@ -1,0 +1,64 @@
+.lesson-container {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 1rem;
+}
+
+.date-header {
+    font-size: 14px;
+    font-weight: bold;
+    margin: 1.5rem 0 0.5rem;
+    color: #333;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 0.25rem;
+}
+
+.lesson-item {
+    border-left: 4px solid #ccc;
+    padding: 0.5rem 1rem;
+    margin-bottom: 0.5rem;
+    background-color: #fdfdfd;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    transition: all 0.3s;
+}
+
+.lesson-item:hover {
+    background-color: #F1F3F4;
+    cursor: pointer;
+}
+
+.lesson-title {
+    font-weight: bold;
+    color: #202020;
+    margin-bottom: 0.25rem;
+}
+
+.lesson-meta {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.lesson-meta.student {
+    color: #4caf50;
+}
+.lesson-meta.teacher {
+    color: #3b82f6;
+}
+
+.lesson-status {
+    font-size: 0.85rem;
+    margin-top: 0.25rem;
+    color: #444;
+}
+
+.no-lesson {
+    font-style: italic;
+    color: #aaa;
+    margin-left: 1rem;
+}
+
+.lesson-first-row {
+    display: flex;
+    justify-content: space-between;
+}

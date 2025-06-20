@@ -32,7 +32,10 @@ public class Notification {
     private String message;
 
     @Enumerated
-    private NotificationStatus status;
+    private NotificationStatus status = NotificationStatus.UNREAD;
 
     private LocalDateTime createdAt;
+
+    @ManyToOne
+    private Lesson lesson;
 }

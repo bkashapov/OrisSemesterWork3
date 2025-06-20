@@ -27,6 +27,7 @@ public class SecurityConfig {
                         .requestMatchers("/me/**").authenticated()
                         .anyRequest().permitAll())
                 .formLogin(form -> form
+                        .loginPage("/login")
                         .loginProcessingUrl("/login")
                         .usernameParameter("username")
                         .passwordParameter("password")
@@ -38,7 +39,13 @@ public class SecurityConfig {
                             response.getWriter().write("Неверный логин или пароль");
                         }))
                 .csrf(AbstractHttpConfigurer::disable) //TODO исправить
-                .logout(AbstractHttpConfigurer::disable) //TODO сделать нормальный логаут
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessHandler((req, res, auth) -> res.setStatus(HttpServletResponse.SC_OK))
+                        .invalidateHttpSession(true)
+                        .clearAuthentication(true)
+                        .deleteCookies("JSESSIONID")
+                )
                 .build();
     }
     @Bean

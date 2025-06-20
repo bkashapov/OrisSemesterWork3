@@ -13,5 +13,7 @@ public record NotificationDto (
     String fromUsername,
     Long skillId,
     String skillName,
+    Long lessonId,
+    LocalDateTime startDateTime,
     LocalDateTime createdAt
 ) {}

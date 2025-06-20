@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     const loginBtn = document.getElementById("loginBtn");
     const modal = document.getElementById("loginModal");
-    const closeBtn = modal.querySelector(".close-btn");
+    const closeBtn = document.getElementById("login-close-btn");
     const errorMsg = document.getElementById("loginError");
     const waitMsg = document.getElementById("wait");
     const username = document.getElementById("username");

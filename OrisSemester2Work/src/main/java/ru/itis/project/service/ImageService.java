@@ -11,7 +11,7 @@ import java.util.UUID;
 @Service
 public class ImageService {
 
-    public static String DEFAULT_IMAGE_FILENAME = "default.png";
+    public static String DEFAULT_IMAGE_FILENAME = "/image/default.png";
 
     public String saveMultipartFile(MultipartFile file) {
         String contentType = file.getContentType();
@@ -34,7 +34,7 @@ public class ImageService {
         try {
             Files.createDirectories(directory);
             file.transferTo(savePath);
-            return savePath.toString();
+            return "/" + savePath.toString().replace("\\", "/");
         } catch (IOException e) {
             throw new RuntimeException("Ошибка при сохранении изображения", e);
         }

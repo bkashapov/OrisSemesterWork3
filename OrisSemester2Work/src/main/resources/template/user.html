@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Me</title>
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/button.css}">
+    <link rel="stylesheet" th:href="@{/css/modal.css}">
+    <link rel="stylesheet" th:href="@{/css/skills.css}">
+    <link rel="stylesheet" th:href="@{/css/skill.css}">
+    <link rel="stylesheet" th:href="@{/css/breadcrumbs.css}">
+    <link rel="stylesheet" th:href="@{/css/user.css}">
+    <script defer th:src="@{/js/header.js}"></script>
+    <script defer th:src="@{/js/login.js}"></script>
+</head>
+<body>
+
+<div th:replace="fragments/header"></div>
+
+<div th:replace="fragments/login-modal-form"></div>
+
+<div class="content-wrapper">
+    <!-- Левая карточка пользователя -->
+    <div class="user-card">
+        <img th:src="@{${pageUser.avatarFilename}}" alt="User Avatar">
+        <h2 th:text="'@' + ${pageUser.username}">Username</h2>
+        <div class="user-info">
+            <p><strong>Email:</strong> <span th:text="${pageUser.email}">example@mail.com</span></p>
+            <p><strong>Avg Rating:</strong> <span th:text="${#numbers.formatDecimal(pageUser.avgRating, 1, 2)}">4.85</span></p>
+            <p><strong>Skill Points:</strong> <span th:text="${pageUser.skillPoints}">150</span></p>
+            <p><strong>About:</strong></p>
+            <p th:text="${pageUser.description}">User description goes here.</p>
+        </div>
+    </div>
+
+    <!-- Правая колонка со скиллами -->
+    <div class="skill-list">
+        <nav class="skill-navbar">
+            <ul>
+                <li><a th:href="@{/user/{username}/skill(username=${pageUser.username})}">Skills</a></li>
+
+            </ul>
+        </nav>
+        <p th:if="${#lists.isEmpty(skills)}" style="color: #999; font-style: italic; padding: 12px;">
+            No skills to display.
+        </p>
+        <a th:each="skill : ${skills}" th:href="@{/user/{username}/skill/{skillId}(username=${pageUser.username}, skillId=${skill.id})}" class="skill-row-link">
+            <div class="skill-row">
+                <img th:src="@{${skill.imageFilename}}" alt="Skill Image" class="skill-row-image"/>
+                <div class="skill-row-texts">
+                    <div class="skill-row-name-rating">
+                        <span class="skill-name" th:text="${skill.name}">Skill Name</span>
+                        <span class="skill-rating" th:text="'Rating: ' + ${#numbers.formatDecimal(skill.rating, 1, 2)}">Rating</span>
+                    </div>
+                    <p class="skill-description"
+                       th:text="${skill.description.length() > 50 ? skill.description.substring(0, 47) + '...' : skill.description}">
+                        Description
+                    </p>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
+
+</body>
+</html>

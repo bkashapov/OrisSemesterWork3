@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Skill</title>
+    <link rel="stylesheet" th:href="@{/css/skill.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/button.css}">
+    <link rel="stylesheet" th:href="@{/css/modal.css}">
+    <link rel="stylesheet" th:href="@{/css/breadcrumbs.css}">
+    <link rel="stylesheet" th:href="@{/css/skill-form.css}">
+    <script defer th:src="@{/js/header.js}"></script>
+    <script defer th:src="@{/js/login.js}"></script>
+    <script defer th:src="@{/js/skill-form.js}"></script>
+</head>
+<body>
+
+<div th:replace="fragments/header"></div>
+
+<div th:replace="fragments/login-modal-form"></div>
+
+<div class="skill-form-wrapper">
+    <form th:action="@{/me/skill}" method="post" enctype="multipart/form-data" th:object="${skill}" class="skill-form">
+        <h2>Create New Skill</h2>
+
+        <label for="name">Name:</label>
+        <input type="text" id="name" th:field="*{name}" required>
+
+        <label for="category">Category:</label>
+        <input type="text" id="category" th:field="*{category}" required>
+
+        <label for="description">Description:</label>
+        <textarea id="description" th:field="*{description}" maxlength="600"></textarea>
+
+        <label for="file">Image:</label>
+        <input type="file" id="file" th:field="*{file}" accept="image/*">
+
+        <p style="color: red; font-size: 12px; display: none" id="errorMsg">Something went wrong</p>
+
+        <button type="submit">Next</button>
+    </form>
+</div>
+
+<form id="extra-form" class="dynamic-text-form hidden">
+    <h3>Set the schedule</h3>
+
+    <p style="color: #666;font-size: 12px; margin: 0 0 20px;">
+        Here you can customize which days for this skill other people can sign up to tutor you.
+        If you do not configure this setting, other users will not be able to apply for this skill<br>
+        Examples:<br>
+        weekly monday 12:00 1.5h<br>
+        single-date 2025-12-31 12:00 1.5h<br>
+        monthly 15d 12:00 1.5h
+    </p>
+    <div class="inputs-container" id="inputs-container">
+        <!-- текстовые инпуты -->
+    </div>
+
+    <p style="color: red; font-size: 12px; display: none" id="scheduleErrorMsg">
+        Check your inputs for mistakes
+    </p>
+    <div class="button-row">
+        <button type="button" id="add-input" class="custom-button custom-button-1">Add new template</button>
+        <button type="submit" id="submit-inputs" class="custom-button custom-button-2">Send</button>
+    </div>
+</form>
+
+</body>
+</html>
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Создание навыка</title>
+    <style>
+        form {
+            max-width: 500px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input, textarea, select {
+            padding: 8px;
+            font-size: 14px;
+        }
+
+        .error {
+            color: red;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+
+
+
+</body>
+</html>
+

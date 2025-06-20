@@ -1,0 +1,95 @@
+.request-container {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 1rem;
+}
+
+.notification-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.notification-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 14px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+.notification-text {
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.user-link, .skill-link {
+    color: #0077cc;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.notification-time {
+    font-style: italic;
+    color: #666;
+}
+
+.notification-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.accept-button, .reject-button {
+    padding: 6px 10px;
+    border: #333333;
+    border-radius: 4px;
+    cursor: pointer;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.accept-button {
+    background-color: #28a745;
+}
+
+.reject-button {
+    background-color: #dc3545;
+}
+.accept-button:disabled {
+    background-color: #4CAF50;
+    color: #388E3C;
+    pointer-events: none;
+}
+.reject-button:disabled {
+    background-color: #8C2F23;
+    color : #541C15;
+    pointer-events: none;
+}
+.error-message {
+    position: fixed;
+    top: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #dc3545;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    font-size: 16px;
+    z-index: 2000;
+    opacity: 0;
+    transition: top 0.4s ease, opacity 0.4s ease;
+}
+
+.error-message.visible {
+    top: 20px;
+    opacity: 1;
+}
+
+.error-message.hidden {
+    pointer-events: none;
+}
+
