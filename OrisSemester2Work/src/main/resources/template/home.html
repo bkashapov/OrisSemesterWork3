@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Know How Net</title>
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/button.css}">
+    <link rel="stylesheet" th:href="@{/css/modal.css}">
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+    <script defer th:src="@{/js/header.js}"></script>
+    <script defer th:src="@{/js/login.js}"></script>
+</head>
+<body>
+
+<div th:replace="fragments/header"></div>
+
+<div th:replace="fragments/login-modal-form"></div>
+
+<div class="skills-wrapper">
+    <div class="skills-grid">
+        <a th:each="skill : ${skills}" th:href="@{/user/{username}/skill/{id}(username=${skill.username}, id=${skill.id})}" style="text-decoration: none; color: black">
+            <div class="skill-card" th:classappend="${skill.archived} ? 'archived'">
+                <img th:src="@{{filename}(filename=${skill.imageFilename})}"
+                     alt="Skill Image" class="skill-image"/>
+
+                <div class="skill-content">
+                    <div class="skill-name" th:text="${skill.name}">Skill Name</div>
+                    <div class="skill-meta">
+                        by <span th:text="${skill.username}">username</span>
+                    </div>
+                    <div class="skill-meta">
+                        <span th:text="${skill.category}">Category</span> •
+                        ★ <span th:text="${skill.rating}">0.0</span>
+                        (<span th:text="${skill.ratingCount}">0</span>)
+                    </div>
+                </div>
+
+            </div>
+        </a>
+    </div>
+</div>
+</body>
+</html>
