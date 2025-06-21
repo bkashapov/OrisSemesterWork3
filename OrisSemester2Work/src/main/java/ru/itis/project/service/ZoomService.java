@@ -1,6 +1,7 @@
 package ru.itis.project.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class ZoomService {
 
@@ -56,9 +58,11 @@ public class ZoomService {
         );
 
         if (!response.getStatusCode().is2xxSuccessful()) {
+            log.error("Zoom service error: {}", response.getBody());
             throw new RuntimeException("Failed to create Zoom meeting: " + response.getStatusCode());
         }
 
+        log.info("Zoom meeting created");
         return new ZoomUrlDto().setStartUrl((String) response.getBody().get("start_url"))
                 .setJoinUrl((String) response.getBody().get("join_url"));
     }

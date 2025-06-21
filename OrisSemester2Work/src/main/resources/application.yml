@@ -17,13 +17,6 @@ spring:
     suffix: .html
     encoding: UTF-8
     mode: HTML
-  kafka:
-    bootstrap-servers: localhost:9092
-    consumer:
-      group-id: rate-consumer-group
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      auto-offset-reset: earliest
 logging:
   level:
     root: info
@@ -33,7 +26,17 @@ logging:
     console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
   file:
     name: logs/app.log
+
+jwt:
+  admin-username: ${ADMIN_USERNAME}
+  admin-password: ${ADMIN_PASSWORD}
+  secret: ${JWT_SECRET}
+
 zoom:
   client-id:${ZOOM_CLIENT_ID}
   client-secret:${ZOOM_CLIENT_SECRET}
   account-id:${ZOOM_ACCOUNT_ID}
+
+comment-service:
+  host: "localhost"
+  port: 8081

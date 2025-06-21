@@ -27,7 +27,7 @@ public class SecurityConfig {
                         .requestMatchers("/me/**").authenticated()
                         .anyRequest().permitAll())
                 .formLogin(form -> form
-                        .loginPage("/login")
+                        .loginPage("/home")
                         .loginProcessingUrl("/login")
                         .usernameParameter("username")
                         .passwordParameter("password")

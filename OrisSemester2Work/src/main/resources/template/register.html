@@ -2,19 +2,35 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Register</title>
+    <title>Know How Net</title>
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/button.css}">
+    <link rel="stylesheet" th:href="@{/css/modal.css}">
+    <link rel="stylesheet" th:href="@{/css/register.css}">
+    <script defer th:src="@{/js/header.js}"></script>
+    <script defer th:src="@{/js/login.js}"></script>
 </head>
-
 <body>
+
+<div th:replace="fragments/header"></div>
+
+<div th:replace="fragments/login-modal-form"></div>
 <div>
-    <form th:action="@{/register}" th:object="${registerForm}" content="" method="post">
-        <input type="text" th:field="*{username}" placeholder="username" required minlength="8" maxlength="20" pattern="^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$" />
+    <form class="register-form" th:action="@{/register}" th:object="${registerForm}" method="post">
+        <input type="text" th:field="*{username}" placeholder="Username" required minlength="8" maxlength="20"
+               pattern="^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$" />
         <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
-        <input type="text" th:field="*{email}" placeholder="email" required minlength="6" maxlength="50" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$" />
+
+        <input type="text" th:field="*{email}" placeholder="Email" required minlength="6" maxlength="50"
+               pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" />
         <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
-        <input type="text" th:field="*{password}" placeholder="password" required minlength="8" pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\S+$).{8,}$" />
+
+        <input type="password" th:field="*{password}" placeholder="Password" required minlength="8"
+               pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\S+$).{8,}$" />
         <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
+
         <textarea th:field="*{description}" placeholder="Description" rows="4"></textarea>
+
         <button type="submit">Register</button>
     </form>
 </div>

@@ -28,12 +28,12 @@ public class AuthController {
     public String postRegister(@ModelAttribute @Valid RegistrationFormDto registrationFormDto,
                            Model model) {
         authService.registerUser(registrationFormDto);
-        return "redirect:/login";
+        return "redirect:/home";
     }
 
     @GetMapping("/login")
     public String getLogin(Model model) {
         model.addAttribute("loginForm", new LoginDto());
-        return "login";
+        return "home";
     }
 }

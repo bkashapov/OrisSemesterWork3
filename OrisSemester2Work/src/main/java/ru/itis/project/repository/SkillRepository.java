@@ -14,6 +14,9 @@ import java.util.List;
 @Repository
 public interface SkillRepository extends PagingAndSortingRepository<Skill, Long> {
 
+    @Query("SELECT s FROM Skill s")
+    List<Skill> getSkills(Pageable pageable);
+
     Skill findById(long id);
 
     void save(Skill skill);

@@ -1,0 +1,20 @@
+<div id="enroll-modal" class="modal">
+    <div class="modal-content" id="modal-content">
+        <span class="close-btn" id="enroll-close-btn">&times;</span>
+        <h2>Choose Schedule Range</h2>
+        <select id="schedule-range">
+            <option value="7">Next 7 Days</option>
+            <option value="30">Next 30 Days</option>
+        </select>
+
+        <div id="slots-container" class="slots-scrollable">
+            <!-- Сюда вставляются слоты -->
+        </div>
+
+        <button id="confirm-enroll" class="custom-button custom-button-2">Enroll</button>
+    </div>
+</div>
+
+<div id="success-message" class="success-message hidden">
+    Request has been sent. Wait for the response
+</div>

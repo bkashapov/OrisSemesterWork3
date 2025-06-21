@@ -6,7 +6,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import ru.itis.project.client.CommentClient;
 import ru.itis.project.dto.RateFormDto;
+import ru.itis.project.service.CommentService;
 import ru.itis.project.service.ReviewService;
 import ru.itis.project.service.SkillService;
 
@@ -17,6 +19,7 @@ public class SkillController {
 
     private final SkillService skillService;
     private final ReviewService reviewService;
+    private final CommentService commentService;
 
     @GetMapping
     public String getSkills(@PathVariable String username,
@@ -66,7 +69,16 @@ public class SkillController {
         reviewService.addRate(username, skillId, rateDto, userDetails.getUsername());
     }
 
-
+    @GetMapping("/{skillId}/comment")
+    public String getComments(@PathVariable String username,
+                                        @PathVariable Long skillId,
+                                        @RequestParam(required = false, defaultValue = "0") int page,
+                              Model model) {
+        model.addAttribute("skill", skillService.getSkill(username, skillId));
+        model.addAttribute("comments", commentService.getCommentsBySkillId(skillId, page));
+        model.addAttribute("baseUrl", String.format("/user/%s/skill/%d/comment", username, skillId));
+        return "comment";
+    }
 
 
 }

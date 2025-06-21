@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Know How Net</title>
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/button.css}">
+    <link rel="stylesheet" th:href="@{/css/modal.css}">
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+    <script defer th:src="@{/js/header.js}"></script>
+    <script defer th:src="@{/js/login.js}"></script>
+</head>
+<body>
+
+<div th:replace="fragments/header"></div>
+
+<div th:replace="fragments/login-modal-form"></div>
+<div style="width: 100%; display: flex; justify-content: center; align-items: center; text-align: center">
+    <div style="display: block">
+        <h1>Что-то пошло не так</h1>
+        <p th:text="${error}">Unknown error</p>
+        <p th:text="${status}"></p>
+        <p th:text="${message}"></p>
+    </div>
+
+</div>
+</body>
+</html>

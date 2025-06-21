@@ -1,6 +1,7 @@
 package ru.itis.project.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.itis.project.entity.Skill;
@@ -14,6 +15,7 @@ import java.util.Objects;
 @Service
 @RequiredArgsConstructor
 @Transactional
+@Slf4j
 public class SkillScheduleService {
 
     private final SkillScheduleRepository skillScheduleRepository;
@@ -42,5 +44,6 @@ public class SkillScheduleService {
                 .saveAll(
                         scheduleParserService.parseAll(skillScheduleList, new Skill().setId(skillId))
                 );
+        log.info("skill schedule updated");
     }
 }

@@ -24,7 +24,7 @@ public class UserController {
     public String user(@AuthenticationPrincipal UserDetails userDetails,
                        @PathVariable String username,
                        Model model) {
-        if (userDetails.getUsername().equals(username)) {
+        if (userDetails != null && userDetails.getUsername().equals(username)) {
             return "redirect:/me";
         }
         UserPageDto userPageDto = homepageService.getHomepage(username);

@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import ru.itis.project.dto.*;
 import ru.itis.project.exception.UserNotFoundException;
+import ru.itis.project.service.CommentService;
 import ru.itis.project.service.LessonService;
 import ru.itis.project.service.ReviewService;
 import ru.itis.project.service.SkillService;
@@ -23,6 +24,7 @@ public class SkillRestController {
     private final SkillService skillService;
     private final LessonService lessonService;
     private final ReviewService reviewService;
+    private final CommentService commentService;
 
     @GetMapping
     public Page<SkillBasicDto> getSkills(@PathVariable String username,
@@ -63,6 +65,17 @@ public class SkillRestController {
             throw new UserNotFoundException("Not authenticated");
         }
         return reviewService.addRate(username, skillId, rateDto, userDetails.getUsername());
+    }
+
+    @PostMapping("/{skillId}/comment")
+    public CommentDto addComment(@AuthenticationPrincipal UserDetails userDetails,
+                                 @PathVariable String username,
+                                 @PathVariable Long skillId,
+                                 @RequestBody CommentFormDto commentDto) {
+        if (userDetails == null) {
+            throw new UserNotFoundException("Not authenticated");
+        }
+        return commentService.addComment(userDetails.getUsername(), commentDto, skillId);
     }
 
 }
